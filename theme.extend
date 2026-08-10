@@ -1,0 +1,12 @@
+colors: {
+  ink: "#05070F",
+  poke: { DEFAULT: "#E23B2E", dim: "#B92E23" },
+  scan: "#4C7CFF",
+  gold: "#F4C744",
+  muted: "#8B93A7",
+},
+fontFamily: {
+  display: ["'Chakra Petch'", "sans-serif"],
+  body: ["Inter", "sans-serif"],
+  mono: ["'JetBrains Mono'", "monospace"],
+},
