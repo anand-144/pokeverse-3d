@@ -11,7 +11,7 @@ const navLinks = [
   },
   {
     label: "Pokédex",
-    path: ROUTES.DETAILS,
+    path: ROUTES.POKEDEX,
   },
   {
     label: "Types",

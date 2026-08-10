@@ -1,6 +1,7 @@
 export const ROUTES = {
   LANDING: "/",
   HOME: "/home",
+  POKEDEX: "/pokedex",
   DETAILS: "/pokemon/:id",
   TYPES: "/types",
   FAVORITES: "/favorites",

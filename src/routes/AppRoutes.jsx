@@ -2,7 +2,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import Landing from "../pages/Landing";
 import Home from "../pages/Home";
-import PokemonDetails from "../pages/PokemonDetails";
+import PokedexDetails from "../pages/PokedexDetails";
+import Pokedex from "../pages/Pokedex";
 import Types from "../pages/Types";
 import Favorites from "../pages/Favorites";
 import Compare from "../pages/Compare";
@@ -26,7 +27,8 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/pokemon/:id" element={<PokemonDetails />} />
+        <Route path="/pokedex" element={<Pokedex />} />
+        <Route path="/pokemon/:id" element={<PokedexDetails />} />
         <Route path="/types" element={<Types />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/compare" element={<Compare />} />
