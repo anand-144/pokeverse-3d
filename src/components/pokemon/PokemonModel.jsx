@@ -10,6 +10,10 @@ function PokemonModel({
 }) {
   const group = useRef();
 
+  const attackSound = useRef(
+    new Audio("/audio/pokemon/charizard.ogg")
+  );
+
   const { scene, animations } = useGLTF(model);
 
   const { actions } = useAnimations(
@@ -20,7 +24,9 @@ function PokemonModel({
   useEffect(() => {
     console.log(
       "Animations:",
-      animations.map((animation) => animation.name)
+      animations.map(
+        (animation) => animation.name
+      )
     );
 
     // Pikachu Dance
@@ -48,7 +54,7 @@ function PokemonModel({
   }, [actions, animations, animation]);
 
   const handleAttack = () => {
-    // Only Charizard should attack
+    // Prevent Pikachu from attacking
     if (animation) return;
 
     const idle =
@@ -58,6 +64,13 @@ function PokemonModel({
       actions["pm0006_00_00_20410_attack02"];
 
     if (!attack) return;
+
+    // Sync roar with animation
+    setTimeout(() => {
+      attackSound.current.currentTime = 0;
+      attackSound.current.volume = 0.7;
+      attackSound.current.play();
+    }, 150);
 
     idle?.fadeOut(0.2);
 

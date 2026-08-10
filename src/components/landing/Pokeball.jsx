@@ -6,6 +6,10 @@ import { useRef, useState } from "react";
 function Pokeball({ onBurst }) {
   const group = useRef();
 
+  const captureSound = useRef(
+    new Audio("/audio/bgm/capture.mp3")
+  );
+
   const { scene } = useGLTF(
     "/models/pokeball/pokeball.glb"
   );
@@ -19,6 +23,13 @@ function Pokeball({ onBurst }) {
 
     onBurst?.();
 
+    // Slight delay so sound matches wiggle
+    setTimeout(() => {
+      captureSound.current.currentTime = 0;
+      captureSound.current.volume = 0.8;
+      captureSound.current.play();
+    }, 120);
+
     setTimeout(() => {
       setBurst(false);
     }, 900);
@@ -29,15 +40,19 @@ function Pokeball({ onBurst }) {
 
     const t = state.clock.elapsedTime;
 
+    // Floating
     group.current.position.y =
       Math.sin(t * 1.2) * 0.18;
 
+    // Slow rotation
     group.current.rotation.y = t * 0.22;
 
     if (burst) {
+      // Wiggle
       group.current.rotation.z =
         Math.sin(t * 35) * 0.25;
 
+      // Slight pop scale
       easing.damp3(
         group.current.scale,
         [20, 20, 20],
