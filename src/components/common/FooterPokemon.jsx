@@ -1,4 +1,4 @@
-import PokemonCanvas from "../pokemon/PokemonCanvas";
+import PokemonCanvas from "../pokemonmodel/PokemonCanvas";
 
 function FooterPokemon() {
   return (

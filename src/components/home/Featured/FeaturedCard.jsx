@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Flame } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import PokemonCanvas from "../../pokemon/PokemonCanvas";
+import PokemonCanvas from "../../pokemonmodel/PokemonCanvas";
 
 function FeaturedCard() {
   return (
