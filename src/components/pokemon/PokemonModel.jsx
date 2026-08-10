@@ -22,12 +22,6 @@ function PokemonModel({
   );
 
   useEffect(() => {
-    console.log(
-      "Animations:",
-      animations.map(
-        (animation) => animation.name
-      )
-    );
 
     // Pikachu Dance
     if (animation && actions[animation]) {

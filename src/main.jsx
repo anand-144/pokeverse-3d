@@ -7,12 +7,15 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { AudioProvider } from "./context/AudioContext";
 
 import "./index.css";
+import { PokedexProvider } from "./context/PokedexContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThemeProvider>
       <AudioProvider>
-        <App />
+        <PokedexProvider>
+          <App />
+        </PokedexProvider>
       </AudioProvider>
     </ThemeProvider>
   </BrowserRouter>

@@ -1,26 +1,47 @@
+import { useState } from "react";
+
 import PokedexHero from "../components/pokedex/PokedexHero";
-import PokedexStats from "../components/pokedex/PokedexStats";
-import SearchBar from "../components/pokedex/SearchBar";
-import FilterBar from "../components/pokedex/FilterBar";
-import SortDropdown from "../components/pokedex/SortDropdown";
+import PokedexFilters from "../components/pokedex/PokedexFilters";
 import PokemonGrid from "../components/pokedex/PokemonGrid";
 
 function Pokedex() {
+  const [search, setSearch] = useState("");
+
+  const [selectedType, setSelectedType] =
+    useState("all");
+
+  const [selectedGeneration, setSelectedGeneration] =
+    useState("all");
+
+  const [sortBy, setSortBy] =
+    useState("id");
+
   return (
-    <main className="min-h-screen bg-[#020617]">
+    <main className="min-h-screen overflow-hidden bg-[#070B14]">
       <PokedexHero />
 
-      <PokedexStats />
+      <PokedexFilters
+        search={search}
+        setSearch={setSearch}
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
+        selectedGeneration={selectedGeneration}
+        setSelectedGeneration={
+          setSelectedGeneration
+        }
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
 
-      <section className="mx-auto max-w-7xl px-6 py-12">
-        <div className="mb-10 flex flex-wrap items-center gap-4">
-          <SearchBar />
-          <FilterBar />
-          <SortDropdown />
-        </div>
 
-        <PokemonGrid />
-      </section>
+      <PokemonGrid
+        search={search}
+        selectedType={selectedType}
+        selectedGeneration={
+          selectedGeneration
+        }
+        sortBy={sortBy}
+      />
     </main>
   );
 }
