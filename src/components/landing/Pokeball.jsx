@@ -23,7 +23,6 @@ function Pokeball({ onBurst }) {
 
     onBurst?.();
 
-    // Slight delay so sound matches wiggle
     setTimeout(() => {
       captureSound.current.currentTime = 0;
       captureSound.current.volume = 0.8;
@@ -40,19 +39,16 @@ function Pokeball({ onBurst }) {
 
     const t = state.clock.elapsedTime;
 
-    // Floating
     group.current.position.y =
       Math.sin(t * 1.2) * 0.18;
 
-    // Slow rotation
-    group.current.rotation.y = t * 0.22;
+    group.current.rotation.y =
+      t * 0.22;
 
     if (burst) {
-      // Wiggle
       group.current.rotation.z =
         Math.sin(t * 35) * 0.25;
 
-      // Slight pop scale
       easing.damp3(
         group.current.scale,
         [20, 20, 20],
@@ -78,13 +74,16 @@ function Pokeball({ onBurst }) {
   });
 
   return (
-    <primitive
+    <group
       ref={group}
-      object={scene}
       position={[0, -0.1, 0]}
-      rotation={[0.15, Math.PI, 0]}
       onClick={triggerBurst}
-    />
+    >
+      <primitive
+        object={scene}
+        rotation={[-Math.PI / 3.5, 0, 0]}
+      />
+    </group>
   );
 }
 

@@ -1,94 +1,54 @@
-import { motion } from "framer-motion";
-import { typeColors } from "../../utils/typeColors";
+import StatsHeader from "./stats/StatsHeader";
+import StatsRadar from "./stats/StatsRadar";
+import StatsBars from "./stats/StatsBars";
+import StatsSummary from "./stats/StatsSummary";
 
 function PokemonStats({ pokemon }) {
-  const primaryType =
-    pokemon.types?.[0]?.type?.name || "normal";
-
-  const accentColor =
-    typeColors[primaryType] || "#ef4444";
-
-  const getStatWidth = (value) => {
-    return Math.min((value / 255) * 100, 100);
-  };
-
   const totalStats = pokemon.stats.reduce(
-    (total, stat) =>
-      total + stat.base_stat,
+    (total, stat) => total + stat.base_stat,
     0
   );
 
+  const strongestStat = [...pokemon.stats].sort(
+    (a, b) => b.base_stat - a.base_stat
+  )[0];
+
+  const weakestStat = [...pokemon.stats].sort(
+    (a, b) => a.base_stat - b.base_stat
+  )[0];
+
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-      <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-3xl font-bold text-white">
-          Base Stats
-        </h2>
+    <section className="relative overflow-hidden rounded-[40px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl">
+      {/* HUD Grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:30px_30px]" />
 
-        <div className="rounded-2xl bg-black/20 px-5 py-3">
-          <p className="text-sm text-slate-400">
-            Total
-          </p>
+      <div className="relative z-10">
+        <StatsHeader
+          pokemon={pokemon}
+          totalStats={totalStats}
+        />
 
-          <p
-            className="text-2xl font-black"
-            style={{
-              color: accentColor,
-            }}
-          >
-            {totalStats}
-          </p>
+        <div className="mt-10 grid gap-10 xl:grid-cols-[500px_1fr]">
+          <StatsRadar pokemon={pokemon} />
+
+          <StatsBars pokemon={pokemon} />
         </div>
+
+        <StatsSummary
+          totalStats={totalStats}
+          strongestStat={strongestStat}
+          weakestStat={weakestStat}
+        />
       </div>
 
-      <div className="space-y-6">
-        {pokemon.stats.map(
-          (stat, index) => (
-            <div key={stat.stat.name}>
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-sm font-semibold uppercase tracking-wider text-slate-300">
-                  {stat.stat.name.replace(
-                    "-",
-                    " "
-                  )}
-                </span>
+      {/* Corner Decoration */}
+      <div className="absolute left-6 top-6 h-8 w-8 border-l-2 border-t-2 border-cyan-400/50" />
 
-                <span
-                  className="font-bold"
-                  style={{
-                    color: accentColor,
-                  }}
-                >
-                  {stat.base_stat}
-                </span>
-              </div>
+      <div className="absolute right-6 top-6 h-8 w-8 border-r-2 border-t-2 border-cyan-400/50" />
 
-              <div className="h-4 overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  initial={{
-                    width: 0,
-                  }}
-                  animate={{
-                    width: `${getStatWidth(
-                      stat.base_stat
-                    )}%`,
-                  }}
-                  transition={{
-                    duration: 1,
-                    delay: index * 0.1,
-                  }}
-                  className="h-full rounded-full"
-                  style={{
-                    backgroundColor:
-                      accentColor,
-                    boxShadow: `0 0 20px ${accentColor}`,
-                  }}
-                />
-              </div>
-            </div>
-          )
-        )}
-      </div>
+      <div className="absolute bottom-6 left-6 h-8 w-8 border-b-2 border-l-2 border-cyan-400/50" />
+
+      <div className="absolute bottom-6 right-6 h-8 w-8 border-b-2 border-r-2 border-cyan-400/50" />
     </section>
   );
 }
