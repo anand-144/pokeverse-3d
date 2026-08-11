@@ -2,6 +2,8 @@ import { TbPokeball } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import { useEffect, useState } from "react";
+
 import { ROUTES } from "../../constants/routes";
 
 const navLinks = [
@@ -27,7 +29,39 @@ const navLinks = [
   },
 ];
 
+
+
+
 function Navbar() {
+
+  const [hidden, setHidden] =
+    useState(false);
+
+  useEffect(() => {
+    const checkScanner = () => {
+      setHidden(
+        document.body.classList.contains(
+          "scanner-open"
+        )
+      );
+    };
+
+    checkScanner();
+
+    const observer =
+      new MutationObserver(checkScanner);
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () =>
+      observer.disconnect();
+  }, []);
+
+  if (hidden) return null;
+
   return (
     <motion.header
       initial={{ y: -120, opacity: 0 }}
