@@ -68,23 +68,35 @@ function PokemonGrid({
               return {
                 id: detail.id,
 
-                name:
-                  detail.name,
+                name: detail.name,
 
                 image:
-                  detail.sprites.other.home.front_default ,
+                  detail.sprites?.other?.home
+                    ?.front_default ||
+                  detail.sprites?.other?.[
+                    "official-artwork"
+                  ]?.front_default ||
+                  detail.sprites?.front_default,
 
-                types:
-                  detail.types.map(
-                    (t) =>
-                      t.type.name
-                  ),
+                shinyImage:
+                  detail.sprites?.other?.home
+                    ?.front_shiny ||
+                  detail.sprites?.other?.[
+                    "official-artwork"
+                  ]?.front_shiny ||
+                  detail.sprites?.front_shiny,
 
-                height:
-                  detail.height,
+                sprites: detail.sprites,
 
-                weight:
-                  detail.weight,
+                cries: detail.cries,
+
+                types: detail.types.map(
+                  (t) => t.type.name
+                ),
+
+                height: detail.height,
+
+                weight: detail.weight,
               };
             }
           )

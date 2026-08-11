@@ -65,24 +65,21 @@ const PokedexDetails = () => {
           species={species}
         />
 
-        {/* Stats */}
         <PokemonStats pokemon={pokemon} />
 
-        {/* Moves */}
-        <PokemonMoves pokemon={pokemon} />
+        <PokemonWeaknesses pokemon={pokemon} />
 
-        {/* Abilities */}
         <PokemonAbilities pokemon={pokemon} />
 
-        <PokemonWeaknesses pokemon={pokemon}/>
-
-        {/* Evolution */}
         <PokemonEvolution
           evolutionChain={evolutionChain}
         />
 
-        {/* Similar Pokemon */}
         <SimilarPokemon
+          pokemon={pokemon}
+        />
+
+        <PokemonMoves
           pokemon={pokemon}
         />
       </div>
