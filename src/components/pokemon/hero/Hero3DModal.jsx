@@ -2,56 +2,65 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { useEffect } from "react";
 
-import Pokemon3DViewer from "./Pokemon3DViewer";
-import usePokemon3DModel from "../../../hooks/usePokemon3DModel";
-
 function Hero3DModal({
   show,
   onClose,
   pokemon,
+  isShiny,
 }) {
-  const {
-    modelUrl,
-    loading,
-  } = usePokemon3DModel(
-    pokemon?.id
-  );
-
   if (!pokemon) return null;
 
+  const image = isShiny
+    ? pokemon.sprites.versions?.[
+      "generation-v"
+    ]?.["black-white"]?.animated
+      ?.front_shiny ||
+    pokemon.sprites.other.showdown
+      ?.front_shiny ||
+    pokemon.sprites.other[
+      "official-artwork"
+    ]?.front_shiny
+    : pokemon.sprites.versions?.[
+      "generation-v"
+    ]?.["black-white"]?.animated
+      ?.front_default ||
+    pokemon.sprites.other.showdown
+      ?.front_default ||
+    pokemon.sprites.other[
+      "official-artwork"
+    ]?.front_default;
 
   useEffect(() => {
-  if (show) {
-    document.body.classList.add(
-      "scanner-open"
-    );
+    if (show) {
+      document.body.classList.add(
+        "scanner-open"
+      );
 
-    document.body.style.overflow =
-      "hidden";
-  } else {
-    document.body.classList.remove(
-      "scanner-open"
-    );
+      document.body.style.overflow =
+        "hidden";
+    } else {
+      document.body.classList.remove(
+        "scanner-open"
+      );
 
-    document.body.style.overflow =
-      "auto";
-  }
+      document.body.style.overflow =
+        "auto";
+    }
 
-  return () => {
-    document.body.classList.remove(
-      "scanner-open"
-    );
+    return () => {
+      document.body.classList.remove(
+        "scanner-open"
+      );
 
-    document.body.style.overflow =
-      "auto";
-  };
-}, [show]);
+      document.body.style.overflow =
+        "auto";
+    };
+  }, [show]);
 
   return (
     <AnimatePresence>
       {show && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -60,7 +69,6 @@ function Hero3DModal({
             className="fixed inset-0 z-[9998] bg-black/90 backdrop-blur-md"
           />
 
-          {/* Fullscreen Scanner */}
           <motion.div
             initial={{
               opacity: 0,
@@ -87,19 +95,19 @@ function Hero3DModal({
               {/* Glow */}
               <div className="absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[300px]" />
 
-              {/* Scanner Rings */}
+              {/* Rings */}
               <div className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/5" />
 
               <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/10" />
 
               <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/10" />
 
-              {/* Scanner Crosshair */}
+              {/* Crosshair */}
               <div className="absolute left-1/2 top-0 h-full w-[1px] -translate-x-1/2 bg-cyan-400/10" />
 
               <div className="absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2 bg-cyan-400/10" />
 
-              {/* Close Button */}
+              {/* Close */}
               <button
                 onClick={onClose}
                 className="absolute right-8 top-8 z-50 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-black/60 text-white backdrop-blur-xl transition-all hover:bg-white/10"
@@ -118,39 +126,53 @@ function Hero3DModal({
                 </h2>
 
                 <p className="mt-2 text-slate-400">
-                  Interactive 3D Pokémon Visualization
+                  Interactive Pokémon Visualization
                 </p>
               </div>
 
               {/* Types */}
               <div className="absolute left-10 top-40 z-40 flex gap-3">
-                {pokemon.types?.map((type) => (
-                  <div
-                    key={type.type.name}
-                    className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-cyan-300"
-                  >
-                    {type.type.name}
-                  </div>
-                ))}
+                {pokemon.types?.map(
+                  (type) => (
+                    <div
+                      key={type.type.name}
+                      className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-cyan-300"
+                    >
+                      {type.type.name}
+                    </div>
+                  )
+                )}
               </div>
 
-              {/* Viewer */}
+              {/* Pokemon Sprite */}
               <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <div className="h-[70vh] w-[70vh] max-h-[700px] max-w-[700px]">
-                  {loading ? (
-                    <div className="flex h-full items-center justify-center">
-                      <div className="h-20 w-20 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent" />
-                    </div>
-                  ) : modelUrl ? (
-                    <Pokemon3DViewer
-                      modelUrl={modelUrl}
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-2xl font-semibold text-cyan-400">
-                      Model Not Available
-                    </div>
-                  )}
-                </div>
+                <motion.img
+                  src={image}
+                  alt={pokemon.name}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.8,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: [0, -15, 0],
+                  }}
+                  transition={{
+                    opacity: {
+                      duration: 0.4,
+                    },
+                    scale: {
+                      duration: 0.4,
+                    },
+                    y: {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  }}
+                  className=" h-[350px] w-[350px] object-contain drop-shadow-[0_0_80px_rgba(34,211,238,0.6)] [image-rendering:pixelated]"
+                />
               </div>
 
               {/* Bottom HUD */}
@@ -189,6 +211,7 @@ function Hero3DModal({
                     {(pokemon.weight / 10).toFixed(1)} kg
                   </p>
                 </div>
+
               </div>
 
               {/* HUD Corners */}
@@ -199,6 +222,7 @@ function Hero3DModal({
               <div className="absolute bottom-8 left-8 h-12 w-12 border-b-2 border-l-2 border-cyan-400/50" />
 
               <div className="absolute bottom-8 right-8 h-12 w-12 border-b-2 border-r-2 border-cyan-400/50" />
+
             </div>
           </motion.div>
         </>

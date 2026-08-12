@@ -218,13 +218,12 @@ function PokemonHero({
           setShow3DModal(false)
         }
         pokemon={pokemon}
+        isShiny={isShiny}
       />
 
       <audio
         ref={audioRef}
-        src={
-          pokemon?.cries?.latest
-        }
+        src={pokemon?.cries?.latest}
       />
     </>
   );

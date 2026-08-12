@@ -1,11 +1,12 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import {
-  FaCube,
   FaScaleBalanced,
   FaVolumeHigh,
 } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+
+import { MdOutlineAnimation } from "react-icons/md";
 
 function HeroActions({
   isShiny,
@@ -75,8 +76,8 @@ function HeroActions({
           className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white transition-all hover:border-cyan-400/30 hover:bg-cyan-400/10"
         >
           <span className="flex items-center gap-2">
-            <FaCube />
-            3D View
+            <MdOutlineAnimation size={20}/>
+            Animated View
           </span>
         </motion.button>
 
