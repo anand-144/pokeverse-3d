@@ -1,0 +1,12 @@
+export const gymBadges = {
+  kanto: [
+    "Boulder Badge",
+    "Cascade Badge",
+    "Thunder Badge",
+    "Rainbow Badge",
+    "Soul Badge",
+    "Marsh Badge",
+    "Volcano Badge",
+    "Earth Badge",
+  ],
+};
