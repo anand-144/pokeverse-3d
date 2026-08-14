@@ -2,46 +2,46 @@ export const regions = [
   {
     id: "kanto",
     name: "Kanto",
-    image: "/regions/kanto.png",
+    image: "/regions/Kanto.png",
   },
   {
     id: "johto",
     name: "Johto",
-    image: "/regions/johto.png",
+    image: "/regions/Johto.png",
   },
   {
     id: "hoenn",
     name: "Hoenn",
-    image: "/regions/hoenn.png",
+    image: "/regions/Hoenn.png",
   },
   {
     id: "sinnoh",
     name: "Sinnoh",
-    image: "/regions/sinnoh.png",
+    image: "/regions/Sinnoh.png",
   },
   {
     id: "unova",
     name: "Unova",
-    image: "/regions/unova.png",
+    image: "/regions/Unova.png",
   },
   {
     id: "kalos",
     name: "Kalos",
-    image: "/regions/kalos.png",
+    image: "/regions/Kalos.png",
   },
   {
     id: "alola",
     name: "Alola",
-    image: "/regions/alola.png",
+    image: "/regions/Alola.png",
   },
   {
     id: "galar",
     name: "Galar",
-    image: "/regions/galar.png",
+    image: "/regions/Galar.png",
   },
   {
     id: "paldea",
     name: "Paldea",
-    image: "/regions/paldea.png",
+    image: "/regions/Paldea.png",
   },
 ];

@@ -8,5 +8,4 @@ export const ROUTES = {
   COMPARE: "/compare",
   RANDOM: "/random",
   ABOUT: "/about",
-  SETTINGS: "/settings",
 };

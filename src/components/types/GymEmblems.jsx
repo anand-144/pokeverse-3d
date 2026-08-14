@@ -13,22 +13,17 @@ function GymEmblems({ region }) {
       <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
         {badges.map((badge) => (
           <div
-            key={badge}
-            className="
-              rounded-2xl
-              border
-              border-white/10
-              bg-white/5
-              p-5
-              text-center
-            "
+            key={badge.name}
+            className="rounded-2xlborder border-white/10 bg-white/5p-5 text-center"
           >
-            <div className="text-4xl mb-3">
-              🏅
-            </div>
+            <img
+              src={badge.image}
+              alt={badge.name}
+              className=" h-20 w-20 mx-auto mb-3 object-contain"
+            />
 
             <h3 className="font-semibold text-white">
-              {badge}
+              {badge.name}
             </h3>
           </div>
         ))}

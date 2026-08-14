@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion"
 
 import TypesHero from "../components/types/TypesHero";
 import TypeStats from "../components/types/TypeStats";
@@ -13,6 +14,7 @@ import BackgroundParticles from "../components/landing/BackgroundParticles";
 function Types() {
   const [selectedType, setSelectedType] = useState("fire");
   const [selectedRegion, setSelectedRegion] = useState("kanto");
+  const [selectedMap, setSelectedMap] = useState(null);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030712]">
@@ -96,6 +98,7 @@ function Types() {
           <RegionalMaps
             selectedRegion={selectedRegion}
             onRegionSelect={setSelectedRegion}
+            onMapOpen={setSelectedMap}
           />
         </section>
 
@@ -104,6 +107,19 @@ function Types() {
           <GymEmblems region={selectedRegion} />
         </section>
       </div>
+      {selectedMap && (
+        <div
+          onClick={() => setSelectedMap(null)}
+          className="fixed inset-0 z-50 bg-black/80backdrop-blur-sm flex items-center justify-center p-4 "
+        >
+          <motion.img
+            layoutId={selectedMap.id}
+            src={selectedMap.image}
+            alt={selectedMap.name}
+            className=" max-w-6xl w-full max-h-[90vh] object-contain rounded-2xl"
+          />
+        </div>
+      )}
     </main>
   );
 }

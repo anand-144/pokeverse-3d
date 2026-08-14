@@ -4,41 +4,27 @@ import { regions } from "../../data/regions";
 function RegionalMaps({
   selectedRegion,
   onRegionSelect,
+  onMapOpen,
 }) {
   return (
     <div className="grid md:grid-cols-3 xl:grid-cols-5 gap-5">
       {regions.map((region) => (
         <motion.button
           key={region.id}
-          whileHover={{
-            y: -8,
-          }}
           onClick={() =>
-            onRegionSelect(
-              region.id
-            )
+            onRegionSelect(region.id)
           }
-          className={`
-            overflow-hidden
-            rounded-3xl
-            border
-            transition-all
-            ${
-              selectedRegion ===
-              region.id
-                ? "border-red-500/50"
-                : "border-white/10"
-            }
-          `}
+          className={` overflow-hidden rounded-3xl border transition-all  ${selectedRegion === region.id  ? "border-red-500/50" : "border-white/10" } `}
         >
-          <img
+          <motion.img
+            layoutId={region.id}
             src={region.image}
             alt={region.name}
-            className="
-              h-48
-              w-full
-              object-cover
-            "
+            onClick={(e) => {
+              e.stopPropagation();
+              onMapOpen(region);
+            }}
+            className=" h-48 w-full object-cover cursor-zoom-in  "
           />
 
           <div className="p-4 bg-white/[0.03]">

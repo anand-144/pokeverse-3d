@@ -9,7 +9,6 @@ import Favorites from "../pages/Favorites";
 import Compare from "../pages/Compare";
 import Random from "../pages/Random";
 import About from "../pages/About";
-import Settings from "../pages/Settings";
 import NotFound from "../pages/NotFound";
 
 import Navbar from "../components/common/Navbar";
@@ -34,7 +33,6 @@ function AppRoutes() {
         <Route path="/compare" element={<Compare />} />
         <Route path="/random" element={<Random />} />
         <Route path="/about" element={<About />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

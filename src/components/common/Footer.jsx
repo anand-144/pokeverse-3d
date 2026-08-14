@@ -51,7 +51,7 @@ function Footer() {
         {/* Navigation */}
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           <Link
-            to="/pokedex/:id"
+            to="/pokemon/:id"
             className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-zinc-300 transition hover:border-yellow-500/20 hover:bg-yellow-500/10 hover:text-yellow-300"
           >
             Pokédex

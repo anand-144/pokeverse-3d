@@ -74,12 +74,6 @@ function PokemonHero({
     );
   };
 
-  const addToCompare = () => {
-    localStorage.setItem(
-      "comparePokemon",
-      pokemon.id
-    );
-  };
 
   const playCry = () => {
     if (
@@ -154,21 +148,13 @@ function PokemonHero({
 
           {/* Actions */}
           <HeroActions
+            pokemon={pokemon}
             isShiny={isShiny}
-            setIsShiny={
-              setIsShiny
-            }
+            setIsShiny={setIsShiny}
             favorite={favorite}
-            toggleFavorite={
-              toggleFavorite
-            }
+            toggleFavorite={toggleFavorite}
             playCry={playCry}
-            addToCompare={
-              addToCompare
-            }
-            setShow3DModal={
-              setShow3DModal
-            }
+            setShow3DModal={setShow3DModal}
           />
 
           {/* Info */}
