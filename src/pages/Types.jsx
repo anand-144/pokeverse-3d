@@ -127,17 +127,6 @@ function TypesPage() {
             <span className="inline-flex px-4 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-slate-300">
               World Map
             </span>
-
-            <h2 className="mt-4 text-5xl font-black text-white">
-              Pokémon Regions
-            </h2>
-
-            <p className="mt-4 text-slate-400 max-w-2xl">
-              Travel through every Pokémon
-              region and uncover gym badges,
-              league paths and iconic
-              locations.
-            </p>
           </div>
 
           <RegionalMaps
