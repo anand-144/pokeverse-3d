@@ -65,13 +65,6 @@ function Footer() {
           </Link>
 
           <Link
-            to="/generations"
-            className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-zinc-300 transition hover:border-yellow-500/20 hover:bg-yellow-500/10 hover:text-yellow-300"
-          >
-            Generations
-          </Link>
-
-          <Link
             to="/favorites"
             className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-zinc-300 transition hover:border-yellow-500/20 hover:bg-yellow-500/10 hover:text-yellow-300"
           >

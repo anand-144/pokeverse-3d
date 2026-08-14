@@ -6,78 +6,108 @@ import {
   Leaf,
   Snowflake,
   Ghost,
+  Shield,
+  Swords,
+  Trophy,
+  Sparkles,
 } from "lucide-react";
 
 import PokemonTypesScene from "./PokemonTypesScene";
 
-
 function TypesHero() {
-
   const types = [
     {
       icon: Flame,
       color: "text-red-500",
-      bg: "bg-red-500/10",
+      bg: "from-red-500/20 to-red-500/5",
       border: "border-red-500/20",
+      label: "Fire",
     },
     {
       icon: Droplets,
       color: "text-blue-500",
-      bg: "bg-blue-500/10",
+      bg: "from-blue-500/20 to-blue-500/5",
       border: "border-blue-500/20",
+      label: "Water",
     },
     {
       icon: Zap,
       color: "text-yellow-400",
-      bg: "bg-yellow-400/10",
+      bg: "from-yellow-400/20 to-yellow-400/5",
       border: "border-yellow-400/20",
+      label: "Electric",
     },
     {
       icon: Leaf,
       color: "text-green-500",
-      bg: "bg-green-500/10",
+      bg: "from-green-500/20 to-green-500/5",
       border: "border-green-500/20",
+      label: "Grass",
     },
     {
       icon: Snowflake,
       color: "text-cyan-400",
-      bg: "bg-cyan-400/10",
+      bg: "from-cyan-400/20 to-cyan-400/5",
       border: "border-cyan-400/20",
+      label: "Ice",
     },
     {
       icon: Ghost,
       color: "text-purple-500",
-      bg: "bg-purple-500/10",
+      bg: "from-purple-500/20 to-purple-500/5",
       border: "border-purple-500/20",
+      label: "Ghost",
+    },
+  ];
+
+  const stats = [
+    {
+      icon: Shield,
+      value: "18",
+      label: "Battle Types",
+    },
+    {
+      icon: Swords,
+      value: "324",
+      label: "Matchups",
+    },
+    {
+      icon: Trophy,
+      value: "1000+",
+      label: "Species",
     },
   ];
 
   return (
-    <section className="relative pt-32 pb-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left */}
+    <section className="relative pt-36 pb-28 overflow-hidden">
+      <div className="max-w-[1600px] mx-auto px-6">
+        <div className="grid xl:grid-cols-[1fr_650px] gap-20 items-center">
+          {/* LEFT */}
           <div>
-            <motion.span
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-sm text-slate-300"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-xl"
             >
-              Explore Every Pokémon Type
-            </motion.span>
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+
+              <span className="text-sm font-medium text-slate-300">
+                Complete Type Encyclopedia
+              </span>
+            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="mt-6 text-6xl md:text-7xl xl:text-8xl font-black leading-none"
+              className="mt-8"
             >
-              <span className="text-white">
-                Master
+              <span className="block text-6xl md:text-7xl xl:text-8xl font-black text-white leading-none">
+                Master Every
               </span>
 
-              <span className="block bg-gradient-to-r from-red-500 via-yellow-400 to-blue-500 bg-clip-text text-transparent">
-                Pokémon Types
+              <span className="block mt-2 text-6xl md:text-7xl xl:text-8xl font-black leading-none bg-gradient-to-r from-red-500 via-yellow-400 to-blue-500 bg-clip-text text-transparent">
+                Pokémon Type
               </span>
             </motion.h1>
 
@@ -85,55 +115,93 @@ function TypesHero() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="mt-6 max-w-xl text-lg leading-relaxed text-slate-400"
+              className="mt-8 max-w-2xl text-lg xl:text-xl leading-relaxed text-slate-400"
             >
-              Discover strengths,
-              weaknesses, resistances,
-              immunities and every Pokémon
-              connected to each type.
-              Learn battle matchups like a
-              true Pokémon Master.
+              Explore strengths, weaknesses,
+              resistances and battle advantages
+              across every Pokémon type. Learn
+              how type interactions shape battles
+              and build the perfect competitive
+              strategy.
             </motion.p>
 
+            {/* Stats */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
+              className="mt-10 grid grid-cols-3 gap-4 max-w-xl"
+            >
+              {stats.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.label}
+                    className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5"
+                  >
+                    <Icon
+                      size={20}
+                      className="text-yellow-400"
+                    />
+
+                    <div className="mt-3 text-3xl font-black text-white">
+                      {item.value}
+                    </div>
+
+                    <div className="text-sm text-slate-400">
+                      {item.label}
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+
+            {/* Type Badges */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
               className="mt-10 flex flex-wrap gap-4"
             >
-              {types.map((type, index) => {
+              {types.map((type) => {
                 const Icon = type.icon;
 
                 return (
                   <motion.div
-                    key={index}
+                    key={type.label}
                     whileHover={{
                       y: -6,
-                      scale: 1.08,
+                      scale: 1.05,
                     }}
                     className={`
-                      h-14 w-14 rounded-2xl border
-                      flex items-center justify-center
-                      backdrop-blur-md
+                      flex items-center gap-3
+                      px-5 py-3 rounded-2xl
+                      border backdrop-blur-xl
+                      bg-gradient-to-br
                       ${type.bg}
                       ${type.border}
                     `}
                   >
                     <Icon
-                      size={24}
+                      size={18}
                       className={type.color}
                     />
+
+                    <span className="font-medium text-white">
+                      {type.label}
+                    </span>
                   </motion.div>
                 );
               })}
             </motion.div>
           </div>
 
-          {/* Right */}
+          {/* RIGHT */}
           <motion.div
             initial={{
               opacity: 0,
-              x: 50,
+              x: 60,
             }}
             animate={{
               opacity: 1,
@@ -142,23 +210,95 @@ function TypesHero() {
             transition={{
               duration: 0.8,
             }}
-            className="
-    relative
-    h-[600px]
-    flex
-    items-center
-    justify-center
-  "
+            className="relative h-[650px]"
           >
-            <div className="absolute w-[450px] h-[450px] bg-gradient-to-r from-red-500/15 via-yellow-500/15 to-blue-500/15 blur-[140px] rounded-full" />
+            {/* Main Glow */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute w-[550px] h-[550px] rounded-full bg-gradient-to-r from-red-500/20 via-yellow-500/20 to-blue-500/20 blur-[180px]" />
+            </div>
 
-            <div className="absolute w-[520px] h-[520px] border border-white/5 rounded-full" />
+            {/* Pokeball Watermark */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.03]">
+              <div className="w-[420px] h-[420px] rounded-full border-[24px] border-white" />
+            </div>
 
-            <div className="absolute w-[400px] h-[400px] border border-white/5 rounded-full" />
+            {/* Glass Container */}
+            <div className="absolute inset-0 rounded-[40px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent" />
+            </div>
 
-            <div className="absolute w-[280px] h-[280px] border border-white/5 rounded-full" />
+            {/* Animated Rings */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 60,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="w-[600px] h-[600px] rounded-full border border-white/5" />
+            </motion.div>
 
-            <div className="relative z-10 w-full h-full">
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="w-[450px] h-[450px] rounded-full border border-white/5" />
+            </motion.div>
+
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="w-[300px] h-[300px] rounded-full border border-white/5" />
+            </motion.div>
+
+            {/* Featured Pokemon Card */}
+            <div className="absolute top-6 left-6 z-20">
+              <div className="rounded-2xl border border-white/10 bg-black/30 backdrop-blur-xl px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles
+                    size={14}
+                    className="text-orange-400"
+                  />
+
+                  <span className="text-xs uppercase tracking-widest text-slate-400">
+                    Featured Pokémon
+                  </span>
+                </div>
+
+                <h3 className="mt-2 text-lg font-bold text-white">
+                  Hisuian Typhlosion
+                </h3>
+
+                <p className="text-sm text-slate-400">
+                  Fire / Ghost
+                </p>
+              </div>
+            </div>
+
+            {/* Click Hint */}
+            <div className="absolute bottom-6 right-6 z-20">
+              <div className="rounded-full border border-white/10 bg-black/30 backdrop-blur-xl px-4 py-2">
+                <span className="text-xs text-slate-400">
+                  Click Pokémon to animate
+                </span>
+              </div>
+            </div>
+
+            {/* 3D Scene */}
+            <div className="relative z-10 h-full">
               <PokemonTypesScene />
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion";
 
 import TypesHero from "../components/types/TypesHero";
 import TypeStats from "../components/types/TypeStats";
@@ -11,87 +11,132 @@ import GymEmblems from "../components/types/GymEmblems";
 
 import BackgroundParticles from "../components/landing/BackgroundParticles";
 
-function Types() {
+const typeGlow = {
+  fire: "bg-orange-500/20",
+  water: "bg-blue-500/20",
+  grass: "bg-green-500/20",
+  electric: "bg-yellow-500/20",
+  psychic: "bg-pink-500/20",
+  ghost: "bg-purple-500/20",
+  dragon: "bg-indigo-500/20",
+  dark: "bg-slate-500/20",
+};
+
+function TypesPage() {
   const [selectedType, setSelectedType] = useState("fire");
-  const [selectedRegion, setSelectedRegion] = useState("kanto");
-  const [selectedMap, setSelectedMap] = useState(null);
+
+  const [selectedRegion, setSelectedRegion] =
+    useState("kanto");
+
+  const [selectedMap, setSelectedMap] =
+    useState(null);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030712]">
-      {/* Glow Effects */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-red-500/15 blur-[180px] rounded-full" />
+      {/* Dynamic Type Aura */}
+      <div
+        className={`absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full blur-[220px] transition-all duration-700 ${
+          typeGlow[selectedType] ||
+          "bg-orange-500/20"
+        }`}
+      />
 
-      <div className="absolute top-[15%] right-0 w-[500px] h-[500px] bg-blue-500/15 blur-[180px] rounded-full" />
+      {/* Static Background Glows */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-red-500/10 blur-[180px] rounded-full" />
 
-      <div className="absolute bottom-0 left-[20%] w-[450px] h-[450px] bg-yellow-500/10 blur-[180px] rounded-full" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/10 blur-[180px] rounded-full" />
 
-      <div className="absolute top-[55%] right-[15%] w-[400px] h-[400px] bg-purple-500/10 blur-[180px] rounded-full" />
-
-      <div className="absolute top-[35%] left-[10%] w-[350px] h-[350px] bg-green-500/10 blur-[180px] rounded-full" />
-
-      {/* Orbital Rings */}
+      {/* Orbit Rings */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="absolute w-[1200px] h-[1200px] border border-white/5 rounded-full" />
+        <div className="absolute w-[1400px] h-[1400px] border border-white/5 rounded-full" />
 
-        <div className="absolute w-[900px] h-[900px] border border-white/5 rounded-full" />
+        <div className="absolute w-[1000px] h-[1000px] border border-white/5 rounded-full" />
 
-        <div className="absolute w-[650px] h-[650px] border border-white/5 rounded-full" />
-
-        <div className="absolute w-[450px] h-[450px] border border-white/5 rounded-full" />
+        <div className="absolute w-[700px] h-[700px] border border-white/5 rounded-full" />
       </div>
 
-      {/* Particle Layer */}
       <BackgroundParticles />
 
-      {/* Content */}
       <div className="relative z-10">
         {/* Hero */}
-        <TypesHero />
+        <TypesHero selectedType={selectedType} />
 
         {/* Stats */}
-        <section className="max-w-7xl mx-auto px-4 md:px-6">
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[1600px] mx-auto px-6 mt-20"
+        >
           <TypeStats />
-        </section>
+        </motion.section>
 
-        {/* Types Grid */}
-        <section className="max-w-7xl mx-auto px-4 md:px-6 mt-12">
+        {/* Types */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[1600px] mx-auto px-6 mt-20"
+        >
           <TypeGrid
             selectedType={selectedType}
             onTypeSelect={setSelectedType}
           />
-        </section>
+        </motion.section>
 
-        {/* Type Details */}
-        <section className="max-w-7xl mx-auto px-4 md:px-6 mt-16">
-          <div className=" relative mb-10">
-            <h2 className="text-5xl font-black text-white capitalize">
+        {/* Details Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[1600px] mx-auto px-6 mt-24"
+        >
+          <div className="mb-12">
+            <span className="inline-flex px-4 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-slate-300">
+              Type Analysis
+            </span>
+
+            <h2 className="mt-4 text-5xl md:text-6xl font-black capitalize bg-gradient-to-r from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
               {selectedType} Type
             </h2>
 
-            <p className="mt-4 text-slate-400 max-w-2xl">
-              Explore strengths, weaknesses, resistances,
-              immunities and Pokémon belonging to the
-              {selectedType} type.
+            <p className="mt-5 text-slate-400 max-w-3xl text-lg">
+              Discover battle advantages,
+              weaknesses, resistances,
+              immunities and every Pokémon
+              connected to the {selectedType}
+              type.
             </p>
           </div>
 
-          <div className="grid xl:grid-cols-[380px_1fr] gap-8">
+          <div className="grid xl:grid-cols-[420px_1fr] gap-8">
             <TypeRelations type={selectedType} />
 
             <TypePokemonList type={selectedType} />
           </div>
-        </section>
+        </motion.section>
 
-        {/* Regional Maps */}
-        <section className="max-w-7xl mx-auto px-4 md:px-6 mt-24">
-          <div className="mb-8">
-            <h2 className="text-3xl font-black text-white">
+        {/* Regions */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[1600px] mx-auto px-6 mt-28"
+        >
+          <div className="mb-10">
+            <span className="inline-flex px-4 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-slate-300">
+              World Map
+            </span>
+
+            <h2 className="mt-4 text-5xl font-black text-white">
               Pokémon Regions
             </h2>
 
-            <p className="mt-2 text-slate-400">
-              Explore every Pokémon region and discover
-              its gym badges.
+            <p className="mt-4 text-slate-400 max-w-2xl">
+              Travel through every Pokémon
+              region and uncover gym badges,
+              league paths and iconic
+              locations.
             </p>
           </div>
 
@@ -100,28 +145,45 @@ function Types() {
             onRegionSelect={setSelectedRegion}
             onMapOpen={setSelectedMap}
           />
-        </section>
+        </motion.section>
 
-        {/* Gym Emblems */}
-        <section className="max-w-7xl mx-auto px-4 md:px-6 mt-16 pb-24">
-          <GymEmblems region={selectedRegion} />
-        </section>
-      </div>
-      {selectedMap && (
-        <div
-          onClick={() => setSelectedMap(null)}
-          className="fixed inset-0 z-50 bg-black/80backdrop-blur-sm flex items-center justify-center p-4 "
+        {/* Gym Badges */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[1600px] mx-auto px-6 mt-20 pb-28"
         >
-          <motion.img
-            layoutId={selectedMap.id}
-            src={selectedMap.image}
-            alt={selectedMap.name}
-            className=" max-w-6xl w-full max-h-[90vh] object-contain rounded-2xl"
-          />
-        </div>
-      )}
+          <GymEmblems region={selectedRegion} />
+        </motion.section>
+      </div>
+
+      {/* Map Modal */}
+      <AnimatePresence>
+        {selectedMap && (
+          <motion.div
+            onClick={() =>
+              setSelectedMap(null)
+            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-6"
+          >
+            <motion.img
+              layoutId={selectedMap.id}
+              src={selectedMap.image}
+              alt={selectedMap.name}
+              initial={{ scale: 0.85 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.85 }}
+              className="w-full max-w-7xl max-h-[90vh] object-contain rounded-3xl border border-white/10"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
 
-export default Types;
+export default TypesPage;

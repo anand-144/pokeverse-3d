@@ -15,6 +15,9 @@ function TypeStats() {
     totalMatchups: 0,
   });
 
+  const [loading, setLoading] =
+    useState(true);
+
   useEffect(() => {
     async function fetchStats() {
       try {
@@ -34,7 +37,7 @@ function TypeStats() {
         const pokemonData =
           await pokemonRes.json();
 
-        const actualTypes =
+        const validTypes =
           typesData.results.filter(
             (type) =>
               ![
@@ -44,7 +47,7 @@ function TypeStats() {
           );
 
         const totalTypes =
-          actualTypes.length;
+          validTypes.length;
 
         setStats({
           totalTypes,
@@ -56,6 +59,8 @@ function TypeStats() {
         });
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -64,42 +69,55 @@ function TypeStats() {
 
   const cards = [
     {
-      title: "Types",
+      title: "Pokémon Types",
       value: stats.totalTypes,
+      subtitle:
+        "Battle categories",
       icon: Sparkles,
-      color:
-        "from-purple-500/20 to-pink-500/10",
-      iconColor: "text-purple-400",
+      glow:
+        "from-purple-500 to-pink-500",
+      iconColor:
+        "text-purple-400",
     },
     {
-      title: "Pokémon",
+      title: "Pokémon Species",
       value:
         stats.totalPokemon.toLocaleString(),
+      subtitle:
+        "Across all generations",
       icon: Shield,
-      color:
-        "from-blue-500/20 to-cyan-500/10",
-      iconColor: "text-blue-400",
+      glow:
+        "from-blue-500 to-cyan-500",
+      iconColor:
+        "text-blue-400",
     },
     {
       title: "Regions",
       value: stats.totalRegions,
+      subtitle:
+        "Explorable worlds",
       icon: Globe2,
-      color:
-        "from-green-500/20 to-emerald-500/10",
-      iconColor: "text-green-400",
+      glow:
+        "from-green-500 to-emerald-500",
+      iconColor:
+        "text-green-400",
     },
     {
-      title: "Matchups",
-      value: stats.totalMatchups,
+      title: "Type Matchups",
+      value:
+        stats.totalMatchups,
+      subtitle:
+        "Strength calculations",
       icon: Swords,
-      color:
-        "from-red-500/20 to-orange-500/10",
-      iconColor: "text-red-400",
+      glow:
+        "from-red-500 to-orange-500",
+      iconColor:
+        "text-red-400",
     },
   ];
 
   return (
-    <section className="mt-10">
+    <section>
       <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
         {cards.map(
           (card, index) => {
@@ -111,7 +129,7 @@ function TypeStats() {
                 key={card.title}
                 initial={{
                   opacity: 0,
-                  y: 30,
+                  y: 40,
                 }}
                 whileInView={{
                   opacity: 1,
@@ -125,52 +143,76 @@ function TypeStats() {
                     index * 0.1,
                 }}
                 whileHover={{
-                  y: -8,
+                  y: -10,
                 }}
                 className="
                   group
                   relative
                   overflow-hidden
-                  rounded-[28px]
+                  rounded-[32px]
                   border
                   border-white/10
                   bg-white/[0.03]
                   backdrop-blur-xl
-                  p-6
+                  p-7
                 "
               >
+                {/* Glow Line */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 blur-2xl transition-all duration-500 group-hover:opacity-100`}
+                  className={`absolute top-0 left-0 h-[3px] w-full bg-gradient-to-r ${card.glow}`}
+                />
+
+                {/* Hover Glow */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${card.glow} opacity-0 blur-3xl transition duration-500 group-hover:opacity-15`}
+                />
+
+                {/* Grid Pattern */}
+                <div
+                  className="
+                    absolute inset-0 opacity-[0.03]
+                    bg-[linear-gradient(rgba(255,255,255,0.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.6)_1px,transparent_1px)]
+                    bg-[size:24px_24px]
+                  "
                 />
 
                 <div className="relative z-10">
+                  {/* Icon */}
                   <div
                     className="
-                      h-14
-                      w-14
-                      rounded-2xl
-                      border
-                      border-white/10
+                      h-16 w-16
+                      rounded-3xl
+                      border border-white/10
                       bg-white/5
-                      flex
-                      items-center
-                      justify-center
+                      flex items-center justify-center
                     "
                   >
                     <Icon
-                      size={26}
+                      size={28}
                       className={
                         card.iconColor
                       }
                     />
                   </div>
 
-                  <h3 className="mt-6 text-4xl font-black text-white">
-                    {card.value}
-                  </h3>
+                  {/* Value */}
+                  <div className="mt-8">
+                    {loading ? (
+                      <div className="h-12 w-28 rounded-xl bg-white/5 animate-pulse" />
+                    ) : (
+                      <h3 className="text-5xl font-black text-white">
+                        {card.value}
+                      </h3>
+                    )}
+                  </div>
 
-                  <p className="mt-2 text-slate-400">
+                  {/* Label */}
+                  <h4 className="mt-3 text-lg font-semibold text-white">
                     {card.title}
+                  </h4>
+
+                  <p className="mt-1 text-sm text-slate-400">
+                    {card.subtitle}
                   </p>
                 </div>
               </motion.div>

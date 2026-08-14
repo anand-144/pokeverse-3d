@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { LoopOnce } from "three";
 import {
   useGLTF,
@@ -13,11 +13,11 @@ function PokemonModel(props) {
       "/models/pokemon/typlosion_hisuian.glb"
     );
 
-  const { actions , names } =
-    useAnimations( animations, group );
-
-    useEffect(() => {
-  }, [animations, names, actions]);
+  const { actions } =
+    useAnimations(
+      animations,
+      group
+    );
 
   const handleClick = () => {
     const action =
@@ -28,12 +28,15 @@ function PokemonModel(props) {
     if (!action) return;
 
     action.reset();
+
     action.setLoop(
       LoopOnce,
       1
     );
+
     action.clampWhenFinished =
       true;
+
     action.play();
   };
 
@@ -42,9 +45,21 @@ function PokemonModel(props) {
       ref={group}
       object={scene}
       onClick={handleClick}
+      onPointerOver={() => {
+        document.body.style.cursor =
+          "pointer";
+      }}
+      onPointerOut={() => {
+        document.body.style.cursor =
+          "default";
+      }}
       {...props}
     />
   );
 }
+
+useGLTF.preload(
+  "/models/pokemon/typlosion_hisuian.glb"
+);
 
 export default PokemonModel;
