@@ -30,7 +30,7 @@ function AppRoutes() {
         <Route path="/pokemon/:id" element={<PokedexDetails />} />
         <Route path="/types" element={<Types />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="/compare" element={<Compare />} />
+        <Route path="/compare/:id" element={<Compare />} />
         <Route path="/random" element={<Random />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />

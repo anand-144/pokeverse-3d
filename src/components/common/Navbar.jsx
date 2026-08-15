@@ -24,6 +24,10 @@ const navLinks = [
     path: ROUTES.RANDOM,
   },
   {
+    label: "Favourite",
+    path: ROUTES.FAVORITES,
+  },
+  {
     label: "About",
     path: ROUTES.ABOUT,
   },

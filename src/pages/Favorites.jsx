@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import FavoritesHero from "../components/favorites/FavoritesHero";
+import FavoritesStats from "../components/favorites/FavoritesStats";
+import FeaturedFavorite from "../components/favorites/FeaturedFavorite";
+import FavoriteCard from "../components/favorites/FavoriteCard";
+import EmptyFavorites from "../components/favorites/EmptyFavorites";
 
-const Favorites = () => {
+function Favorites() {
   const [pokemonList, setPokemonList] =
     useState([]);
 
@@ -76,125 +80,122 @@ const Favorites = () => {
     );
   };
 
+  const uniqueTypes =
+    new Set(
+      pokemonList.flatMap(
+        (pokemon) =>
+          pokemon.types.map(
+            (type) =>
+              type.type.name
+          )
+      )
+    ).size;
+
+  const featuredPokemon =
+    pokemonList[0];
+
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-lg text-slate-300">
+      <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+        <p className="text-lg text-zinc-400">
           Loading Favorites...
         </p>
-      </div>
+      </main>
     );
   }
 
   return (
-    <main className="min-h-screen px-6 py-24">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-6xl font-black text-white">
-            Favorite Pokémon
-          </h1>
+    <main className="relative min-h-screen overflow-hidden bg-zinc-950">
+      {/* Top Glow */}
+      <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-red-500/10 blur-[140px]" />
 
-          <p className="text-lg text-slate-400">
-            Your saved Pokémon
-            collection
-          </p>
-        </div>
+      {/* Left Glow */}
+      <div className="absolute left-0 top-[40%] h-[400px] w-[400px] rounded-full bg-red-500/5 blur-[120px]" />
+
+      {/* Right Glow */}
+      <div className="absolute right-0 top-[70%] h-[400px] w-[400px] rounded-full bg-red-500/5 blur-[120px]" />
+
+      {/* Grid Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)
+          `,
+          backgroundSize:
+            "60px 60px",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pb-24">
+        <FavoritesHero
+          totalFavorites={
+            pokemonList.length
+          }
+        />
 
         {pokemonList.length ===
         0 ? (
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-12 text-center backdrop-blur-xl">
-            <h2 className="mb-3 text-3xl font-bold text-white">
-              No Favorites Yet
-            </h2>
-
-            <p className="text-slate-400">
-              Start adding Pokémon
-              from the details page.
-            </p>
-          </div>
+          <EmptyFavorites />
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {pokemonList.map(
-              (pokemon) => (
-                <div
-                  key={pokemon.id}
-                  className="group rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-                >
-                  <Link
-                    to={`/pokemon/${pokemon.id}`}
-                  >
-                    <img
-                      src={
+          <>
+            <FavoritesStats
+              totalFavorites={
+                pokemonList.length
+              }
+              totalTypes={
+                uniqueTypes
+              }
+              featuredPokemon={
+                featuredPokemon?.name
+              }
+            />
+
+            <FeaturedFavorite
+              pokemon={
+                featuredPokemon
+              }
+            />
+
+            <section>
+              <div className="mb-8">
+                <h2 className="text-3xl font-black text-white">
+                  Collection
+                </h2>
+
+                <p className="mt-2 text-zinc-400">
+                  All your favorite
+                  Pokémon in one
+                  place.
+                </p>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {pokemonList.map(
+                  (pokemon) => (
+                    <FavoriteCard
+                      key={
+                        pokemon.id
+                      }
+                      pokemon={
                         pokemon
-                          .sprites
-                          .other
-                          .home
-                          .front_default
                       }
-                      alt={
-                        pokemon.name
-                      }
-                      className="mx-auto h-48 w-48 object-contain transition-transform duration-300 group-hover:scale-110"
-                    />
-
-                    <h3 className="mt-4 text-center text-2xl font-bold capitalize text-white">
-                      {
-                        pokemon.name
-                      }
-                    </h3>
-
-                    <p className="mt-2 text-center text-slate-400">
-                      #
-                      {String(
-                        pokemon.id
-                      ).padStart(
-                        4,
-                        "0"
-                      )}
-                    </p>
-
-                    <div className="mt-4 flex justify-center gap-2">
-                      {pokemon.types.map(
-                        (
-                          type
-                        ) => (
-                          <span
-                            key={
-                              type
-                                .type
-                                .name
-                            }
-                            className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium capitalize text-white"
-                          >
-                            {
-                              type
-                                .type
-                                .name
-                            }
-                          </span>
+                      onRemove={() =>
+                        removeFavorite(
+                          pokemon.id
                         )
-                      )}
-                    </div>
-                  </Link>
-
-                  <button
-                    onClick={() =>
-                      removeFavorite(
-                        pokemon.id
-                      )
-                    }
-                    className="mt-5 w-full rounded-xl bg-red-500 py-3 font-medium text-white transition hover:bg-red-600"
-                  >
-                    Remove
-                  </button>
-                </div>
-              )
-            )}
-          </div>
+                      }
+                    />
+                  )
+                )}
+              </div>
+            </section>
+          </>
         )}
       </div>
     </main>
   );
-};
+}
 
 export default Favorites;

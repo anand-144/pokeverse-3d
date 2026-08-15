@@ -2,12 +2,12 @@ import PokemonCanvas from "../pokemonmodel/PokemonCanvas";
 
 function FooterPokemon() {
   return (
-    <div className="h-48 w-48">
+    <div className="h-32 w-32">
       <PokemonCanvas
         model="/models/pokemon/pikachu.glb"
         animation="Dance"
-        scale={2}
-        position={[0, -1.8, 0]}
+        scale={1.8}
+        position={[0, -1.6, 0]}
       />
     </div>
   );

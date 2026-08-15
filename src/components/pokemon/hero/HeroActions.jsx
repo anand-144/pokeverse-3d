@@ -17,16 +17,7 @@ function HeroActions({
   playCry,
   setShow3DModal,
 }) {
-const handleCompare = () => {
-  if (!pokemon) return;
 
-  localStorage.setItem(
-    "compareLeft",
-    JSON.stringify({
-      name: pokemon.name,
-    })
-  );
-};
 
   return (
     <section className="mt-12">
@@ -37,11 +28,10 @@ const handleCompare = () => {
           onClick={() =>
             setIsShiny((prev) => !prev)
           }
-          className={`group relative overflow-hidden rounded-2xl border px-6 py-4 font-semibold transition-all ${
-            isShiny
+          className={`group relative overflow-hidden rounded-2xl border px-6 py-4 font-semibold transition-all ${isShiny
               ? "border-yellow-400 bg-yellow-400 text-black"
               : "border-white/10 bg-white/5 text-white"
-          }`}
+            }`}
         >
           <span className="flex items-center gap-2">
             ✨
@@ -81,11 +71,10 @@ const handleCompare = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleFavorite}
-          className={`rounded-2xl border px-6 py-4 ${
-            favorite
+          className={`rounded-2xl border px-6 py-4 ${favorite
               ? "border-red-500 bg-red-500 text-white"
               : "border-white/10 bg-white/5 text-white"
-          }`}
+            }`}
         >
           <span className="flex items-center gap-2">
             {favorite ? (
@@ -101,8 +90,7 @@ const handleCompare = () => {
         </motion.button>
 
         <Link
-          to="/compare"
-          onClick={handleCompare}
+          to={`/compare/${pokemon.id}`}
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
